@@ -28,6 +28,7 @@ import { UnitControllerHistoryHandler } from './utils/unit-controller-history-ha
 import { TraceOverviewComponent } from './trace-overview-component';
 import { TimeRangeUpdatePayload } from 'traceviewer-base/lib/signals/time-range-data-signal-payloads';
 import { GanttChartOutputComponent } from './gantt-chart-output-component';
+import { GenericXYOutputComponent } from './generic-xy-output-component';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -755,6 +756,18 @@ export class TraceContextComponent extends React.Component<TraceContextProps, Tr
                                     className={this.state.pinnedView?.id === output.id ? 'pinned-view-shadow' : ''}
                                 />
                             );
+                        case ProviderType.TREE_GENERIC_XY:
+                            if (this.chartPersistedState && this.chartPersistedState.output.id === output.id) {
+                                outputProps.persistChartState = this.chartPersistedState.payload;
+                                this.chartPersistedState = undefined;
+                            }
+                            return (
+                                <GenericXYOutputComponent
+                                    key={output.id}
+                                    {...outputProps}
+                                    className={this.state.pinnedView?.id === output.id ? 'pinned-view-shadow' : ''}
+                                />
+                            );
                         case ProviderType.TABLE:
                             return (
                                 <TableOutputComponent
@@ -922,8 +935,8 @@ export class TraceContextComponent extends React.Component<TraceContextProps, Tr
         const { timeRange, experimentUUID } = payload;
         if (experimentUUID === this.props.experiment.UUID && timeRange) {
             this.unitController.selectionRange = {
-                start: timeRange.getStart(),
-                end: timeRange.getEnd()
+                start: timeRange.start,
+                end: timeRange.end
             };
         }
     };
