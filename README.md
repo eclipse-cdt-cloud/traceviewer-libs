@@ -1,3 +1,7 @@
+# Archived ⚠️ 
+
+The Trace Viewer Libraries that used to be used for Theia and VS Code Trace Viewer extension is archived. The libraries are copied into the [Trace Viewer extension for VS Code](https://github.com/eclipse-cdt-cloud/vscode-trace-extension), which can be installed in Theia too.
+
 # Trace Viewer Libraries (git subtree)
 
 This repository contains the trace viewer libraries and minimal infrastructure to maintain them in source code form:
